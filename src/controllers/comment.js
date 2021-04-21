@@ -38,9 +38,9 @@ exports.addComment = async (req, res) => {
 
     try {
    
-        let newComment = new Comment();
-        newPost.id = req.body.id;
-        newPost.comment = req.body.comment;
+        let newComment = new Comment(req.body);
+        newComment.id_post = req.params.id_post;
+        newComment.comment = req.body.comment;
         await newComment.save();
         
         if(!newComment){
@@ -65,12 +65,12 @@ exports.updateComment = async (req, res) => {
     const datas = {};
 
     ({ 
-        id: datas.id,
+        id_comment: datas.id_comment,
         comment: datas.comment,
     } = req.body);
 
     try {
-        let comment = await Comment.findOne({ id: datas.id });
+        let comment = await Comment.findOne({ id: datas.id_comment });
 
         if (comment) {       
             Object.keys(datas).forEach((key) => {
@@ -90,10 +90,10 @@ exports.updateComment = async (req, res) => {
 }
 
 exports.deleteComment = async (req, res) => {
-    const id = req.body.id;
+    const id_comment = req.body.id_comment;
 
     try {
-        await Comment.deleteOne({ id: id });
+        await Comment.deleteOne({ id: id_comment });
         return res.status(204).json('comment_deleted');
     } catch (error) {
         return res.status(501).json(error);
