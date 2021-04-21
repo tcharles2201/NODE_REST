@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-const controller = require('../controllers/post');
+const controller = require('../controllers/comment');
 
-router.get('/listAllPosts', controller.listAllComments);
+router.get('/listAllComment', controller.listAllComments);
 
 router.get('/:id', controller.getCommentById);
 
